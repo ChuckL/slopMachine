@@ -14,20 +14,17 @@ slopMachine/
 │   │   ├── lambda.ts       # Lambda handler (production entry point)
 │   │   ├── index.ts        # Local dev server — calls app.listen()
 │   │   ├── features/       # One directory per feature/domain (application core)
-│   │   │   └── <feature>/  # e.g. auth/, users/, posts/
-│   │   │       ├── <feature>.routes.ts      # Parse HTTP input, delegate to controller
-│   │   │       ├── <feature>.controller.ts  # Orchestrate service calls, format responses
-│   │   │       ├── <feature>.service.ts     # Business logic — HTTP-agnostic, unit-testable
-│   │   │       ├── <feature>.model.ts       # Data model / DB schema for this feature
-│   │   │       └── <feature>.ports.ts       # Port interfaces this feature depends on
+|   |   |   |── <domain>/
+|   │   │   │   ├── <domain>.routes.ts      # Parse HTTP input, delegate to controller
+|   │   │   │   ├── <domain>.model.ts       # Data model / DB schema for this feature
+|   │   │   │   |── <domain>.ports.ts       # Port interfaces this feature depends on
+│   │   │   |   └── <feature>/  # e.g. auth/, users/, posts/
+|   │   │   │       ├── <feature>.interactor.ts  # Business logic — HTTP-agnostic, unit-testable
+|   |   |   |       |── <feature>.interactor.test.ts # Tests for the business logic.
 │   │   ├── adapters/       # Adapter implementations — one dir per external system
-│   │   │   ├── s3/         # e.g. S3StorageAdapter implements StoragePort
-│   │   │   ├── sqs/        # e.g. SQSQueueAdapter implements QueuePort
-│   │   │   └── ses/        # e.g. SESEmailAdapter implements EmailPort
 │   │   └── middleware/     # Auth, logging, error handling
 │   ├── tests/
-│   │   ├── unit/
-│   │   └── integration/
+│   │   └── integration/    # Integration tests that go through the entire system.
 │   ├── tsconfig.json
 │   ├── package.json
 │   └── .env.example        # Committed env template — never commit .env
